@@ -9,6 +9,8 @@ import com.example.springdata.jpa.repositories.PublisherRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +26,10 @@ public class BookService {
         this.publisherRepository = publisherRepository;
     }
 
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
+    }
+
     @Transactional
     public Book saveBook(BookRecordDto bookRecordDto) {
         Book book = new Book();
@@ -37,5 +43,10 @@ public class BookService {
         book.setReview(review);
 
         return bookRepository.save(book);
+    }
+
+    @Transactional
+    public void deleteBook(UUID id) {
+        bookRepository.deleteById(id);
     }
 }
